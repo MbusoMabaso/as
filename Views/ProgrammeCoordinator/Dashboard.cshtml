@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Programme Coordinator Dashboard";
+}
+
+<div class="container text-center py-5">
+    <h1 class="display-4 fw-bold mb-3">Welcome to the Programme Coordinator Dashboard!</h1>
+    <p class="lead mb-4">Manage academic programs and lecturer claims from a centralized location.</p>
+</div>
+
+<div class="container mt-5">
+    <div class="row text-center">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 shadow-sm rounded-lg">
+                <div class="card-body">
+                    <i class="fas fa-file-invoice-dollar fa-4x text-primary mb-3"></i>
+                    <h5 class="card-title fw-bold">Manage Claims</h5>
+                    <p class="card-text">Review, approve, and manage all lecturer claims.</p>
+                    <a asp-controller="ProgrammeCoordinator" asp-action="ManageClaims" class="btn btn-primary rounded-lg">Manage Claims</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 shadow-sm rounded-lg">
+                <div class="card-body">
+                    <i class="fas fa-tasks fa-4x text-primary mb-3"></i>
+                    <h5 class="card-title fw-bold">Academic Programmes</h5>
+                    <p class="card-text">Oversee all academic programmes and their details.</p>
+                    <a href="#" class="btn btn-primary rounded-lg">View Programmes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}

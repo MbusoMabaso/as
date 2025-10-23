@@ -1,0 +1,146 @@
+@model CMCS.Models.Claim
+
+@{
+    ViewData["Title"] = "Submit New Claim";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-file-invoice-dollar me-2"></i>
+                        Submit New Claim
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Submit" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="TotalHours" class="form-label fw-bold">
+                                        <i class="fas fa-clock me-1"></i>Total Hours Worked
+                                    </label>
+                                    <input asp-for="TotalHours" class="form-control" placeholder="Enter hours worked" />
+                                    <span asp-validation-for="TotalHours" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="HourlyRate" class="form-label fw-bold">
+                                        <i class="fas fa-dollar-sign me-1"></i>Hourly Rate (R)
+                                    </label>
+                                    <input asp-for="HourlyRate" class="form-control" placeholder="Enter hourly rate" />
+                                    <span asp-validation-for="HourlyRate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Notes" class="form-label fw-bold">
+                                <i class="fas fa-sticky-note me-1"></i>Additional Notes
+                            </label>
+                            <textarea asp-for="Notes" class="form-control" rows="4" placeholder="Enter any additional notes or comments about your claim..."></textarea>
+                            <span asp-validation-for="Notes" class="text-danger"></span>
+                            <div class="form-text">Optional: Provide any additional context or details about your claim.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-paperclip me-1"></i>Supporting Documents
+                            </label>
+                            <input type="file" name="files" class="form-control" multiple 
+                                   accept=".pdf,.docx,.xlsx,.doc,.xls" />
+                            <div class="form-text">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Upload supporting documents (PDF, DOCX, XLSX only). Maximum file size: 10MB per file.
+                            </div>
+                        </div>
+
+                        <!-- Auto-calculated total amount display -->
+                        <div class="alert alert-info">
+                            <h6 class="alert-heading">
+                                <i class="fas fa-calculator me-1"></i>Claim Summary
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <strong>Hours:</strong> <span id="hours-display">0</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>Rate:</strong> R<span id="rate-display">0</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <h5 class="mb-0">
+                                    <strong>Total Amount: R<span id="total-amount">0.00</span></strong>
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary me-md-2">
+                                <i class="fas fa-arrow-left me-1"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-1"></i>Submit Claim
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        $(document).ready(function() {
+            // Auto-calculate total amount
+            function calculateTotal() {
+                var hours = parseFloat($('#TotalHours').val()) || 0;
+                var rate = parseFloat($('#HourlyRate').val()) || 0;
+                var total = hours * rate;
+                
+                $('#hours-display').text(hours.toFixed(1));
+                $('#rate-display').text(rate.toFixed(2));
+                $('#total-amount').text(total.toFixed(2));
+            }
+
+            $('#TotalHours, #HourlyRate').on('input', calculateTotal);
+            
+            // Initial calculation
+            calculateTotal();
+
+            // File upload validation
+            $('input[type="file"]').on('change', function() {
+                var files = this.files;
+                var maxSize = 10 * 1024 * 1024; // 10MB
+                var allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+                                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
+                                   'application/msword', 'application/vnd.ms-excel'];
+                
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    
+                    if (file.size > maxSize) {
+                        alert('File "' + file.name + '" is too large. Maximum size is 10MB.');
+                        this.value = '';
+                        return;
+                    }
+                    
+                    if (!allowedTypes.includes(file.type)) {
+                        alert('File "' + file.name + '" is not a supported format. Please upload PDF, DOCX, or XLSX files only.');
+                        this.value = '';
+                        return;
+                    }
+                }
+            });
+        });
+    </script>
+}

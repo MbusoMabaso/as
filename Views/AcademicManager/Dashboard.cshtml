@@ -1,0 +1,80 @@
+﻿@model IEnumerable<CMCS.Models.User>
+
+@{
+    ViewData["Title"] = "Academic Manager Dashboard";
+}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Academic Manager Dashboard</h1>
+
+    <p class="mb-4">
+        This is a central hub for managing all academic manager accounts. From here, you can view the existing list of managers and add new ones as needed.
+    </p>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h4">Existing Academic Managers</h2>
+        <a asp-action="Create" class="btn btn-primary rounded-lg shadow-sm">
+            <i class="fas fa-plus-circle me-2"></i>Create New Academic Manager
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center" role="alert">
+            No academic managers found. Click the button above to add the first one.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive rounded-lg shadow-sm">
+            <table class="table table-hover mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var manager in Model)
+                    {
+                        <tr>
+                            <td>@manager.UserID</td>
+                            <td>@manager.Username</td>
+                            <td>@manager.Role</td>
+                            <td>
+                                <!--
+                                        These links are placeholders for future functionality.
+                                        You'll need to create corresponding actions in your controller.
+                                    -->
+                                <a href="#" class="btn btn-sm btn-outline-secondary rounded-lg">Edit</a>
+                                <a href="#" class="btn btn-sm btn-outline-danger rounded-lg ms-2">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="container mt-5">
+        <div class="row text-center">
+            <div class="col-lg-12 mb-4">
+                <div class="card h-100 shadow-sm rounded-lg">
+                    <div class="card-body">
+                        <i class="fas fa-clipboard-check fa-4x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold">Verify Claims</h5>
+                        <p class="card-text">Review and approve or reject submitted claims.</p>
+                        <a asp-controller="AcademicManager" asp-action="VerifyClaims" class="btn btn-primary rounded-lg">Verify Claims</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Add Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}

@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container text-center py-5">
+    <h1 class="display-4 fw-bold mb-3">Welcome to CMCS!</h1>
+    <p class="lead mb-4">Your centralized management system for all academic and claim-related activities.</p>
+    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+        <!--
+            These buttons are placeholders. You can link them to other pages in your application.
+            For example, you could link them to the Academic Manager, Claim, or Account views.
+        -->
+        <a href="#" class="btn btn-primary btn-lg px-4 gap-3 rounded-lg shadow-sm">Get Started</a>
+        <a href="#" class="btn btn-outline-secondary btn-lg px-4 rounded-lg">Learn More</a>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row text-center">
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm rounded-lg">
+                <div class="card-body">
+                    <i class="fas fa-user-tie fa-4x text-primary mb-3"></i>
+                    <h5 class="card-title fw-bold">Academic Manager</h5>
+                    <p class="card-text">Manage users and oversee academic activities within the system.</p>
+                    <a asp-controller="AcademicManager" asp-action="Index" class="btn btn-primary rounded-lg">View Dashboard</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm rounded-lg">
+                <div class="card-body">
+                    <i class="fas fa-file-invoice-dollar fa-4x text-primary mb-3"></i>
+                    <h5 class="card-title fw-bold">Claims Management</h5>
+                    <p class="card-text">Submit and track claims with our easy-to-use interface.</p>
+                    <a asp-controller="Claim" asp-action="Submit" class="btn btn-primary rounded-lg">Submit Claim</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm rounded-lg">
+                <div class="card-body">
+                    <i class="fas fa-users-cog fa-4x text-primary mb-3"></i>
+                    <h5 class="card-title fw-bold">User Accounts</h5>
+                    <p class="card-text">Manage your personal account details and settings.</p>
+                    <a asp-controller="Account" asp-action="Index" class="btn btn-primary rounded-lg">Manage Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}

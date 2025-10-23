@@ -1,0 +1,101 @@
+Part 2 — Implement a Prototype Web Application (Marks: 100)
+Instructions
+Building on the prototype from Part 1, you will now add functionalities to the GUI UI .NET Core
+web application. The application should be able to perform the following features:
+1. Lecturers can submit their claims at any time with a click of a button:
+ Implement this feature in your application.
+o Consider the layout, colour scheme, and user flow to make this process as
+straightforward as possible.
+ You should design a simple and intuitive form for lecturers to input their claims.
+ The form should include fields for the hours worked, hourly rate, and any additional notes.
+ The 'Submit' button should be prominently displayed and easy to click.
+2. Programme Coordinators and Academic Managers can easily verify and approve the claims:
+ Design a separate view for coordinators and managers.
+o This view should display all pending claims and provide options to verify or reject
+them.
+o Each claim should be displayed in a clear and organised manner, showing all the
+necessary details for verification.
+o There should be 'Approve' and 'Reject' buttons for each claim.
+3. Lecturers can upload supporting documents for their claims:
+ Add a feature that allows lecturers to upload documents.
+o Ensure that the uploaded files are securely stored and linked to the corresponding
+claim.
+o You should provide an 'Upload' button in the claim submission form.
+o Once a file is uploaded, its name should be displayed on the form.
+o Consider implementing a file size limit and restricting the file types to common
+formats like .pdf, .docx, and .xlsx.
+25 
+Page 9 of 23
+4. The claim status can be tracked transparently until it is settled:
+ Implement a tracking system that updates the status of each claim as it moves through the
+approval process.
+ You could represent the status as a simple text label (e.g., 'Pending', 'Approved', 'Rejected')
+or as a progress bar.
+ The status should be updated in real-time whenever a coordinator or manager approves or
+rejects a claim.
+5. The system always provides consistent and reliable information:
+ Unit Testing: Write unit tests for the code. These tests should cover all the key
+functionalities of the system.
+ Ensure that your application handles errors gracefully and displays accurate information.
+Implement error handling mechanisms to catch and handle exceptions. Display meaningful
+error messages to the user when an error occurs.
+6. Version Control: Regularly commit and push changes to the GitHub repository (5 Times) with
+clear and descriptive commit messages.
+Remember, the goal of Part 2 is to demonstrate your ability to add functionality to a GUI
+application. Focus on implementing the features as described, but also feel free to add any
+additional features that you think would improve the application.
+Submission Guidelines:
+ Add Lecturer Feedback in a Word document and show how you implemented the
+recommendations.
+ Version Control: Push your source code and your Documentation to GitHub. Repository to be
+provided.
+25 
+Page 10 of 23
+POE — Automation of Web Application (Marks: 100)
+For the final part of the POE, you will enhance the functionality of the application developed in Part
+2 and prepare a PowerPoint presentation to showcase your work. This presentation should provide
+a comprehensive overview of the Contract Monthly Claim System, highlighting its features,
+functionality, and benefits.
+1. Application Enhancement (Automation): Implement additional features or improvements to
+enhance the overall functionality and user experience of the system.
+Automation of Features:
+Lecturer view: Automate the claim submission process, allowing lecturers to easily input their hours
+worked and hourly rate, and submit claims.
+ Automation: Implement an auto-calculation feature to compute the final payment based on
+the hours worked and the hourly rate input by the lecturer. Additionally, integrate validation
+checks to ensure accurate data entry.
+ Tools in C# ASP.NET: Build the web application using ASP.NET MVC or ASP.NET Core MVC.
+Leverage JavaScript libraries like jQuery for client-side calculations and validations. The Entity
+Framework can be used to interact with the database to store and retrieve claim data.
+Programme Coordinator and Academic Manager view: Automate claim verification and approval
+processes, enabling efficient review and processing of submitted claims.
+ Automation: Develop an automated system to check submitted claims against predefined
+criteria such as hours worked, hourly rates, and any other relevant policies. Implement
+approval workflows to streamline the verification and approval process.
+ Tools in C# ASP.NET: Use ASP.NET Identity for user authentication and authorisation.
+Implement ASP.NET Web API to handle communication between the front-end and back-end
+systems. Entity Framework can be utilised to query and manipulate data in the database.
+Consider using workflow management tools, such as Windows Workflow Foundation, or
+third-party libraries like FluentValidation, to define and execute approval workflows.
+HR view: Automate claim processing and lecturer data management tasks, streamlining
+administrative processes and improving overall efficiency.
+25 
+Page 11 of 23
+ Automation: Develop functionality to automatically generate invoices or reports
+summarising approved claims for payment processing. Implement features for managing
+lecturer data, such as updating personal information or contact details.
+ Tools in C# ASP.NET: Utilise ASP.NET Web Forms or ASP.NET Core Razor Pages for building
+the HR interface. Integrate reporting libraries like Crystal Reports, SQL Server Reporting
+Services (SSRS), or LINQ to generate invoices or reports. Entity Framework can be used for
+data access operations, while ASP.NET Identity can handle user authentication and
+authorisation.
+2. PowerPoint Presentation: Create a visually appealing and informative presentation to showcase
+your application. Ensure that all key aspects of the Contract Monthly Claim System are covered and
+that its value is effectively communicated.
+3. Version Control: Regularly commit and push changes to the GitHub repository (10 Times) with
+clear and descriptive commit messages.
+4. Submission Guidelines:
+ Add Lecturer Feedback in a Word document and show how you implemented the
+recommendations.
+ PowerPoint Presentation to showcase your application.
+ Version Control: Push your source code and your Documentation to GitHub. Repository to be
