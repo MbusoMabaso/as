@@ -1,11 +1,9 @@
-namespace CMCS.Models
+namespace ClaimApp.Models
 {
     public enum ClaimStatus
     {
-        Submitted,
-        ApprovedByProgrammeCoordinator,
-        ApprovedByAcademicManager,
-        Rejected,
-        Paid
+        Pending = 0,
+        Approved = 1,
+        Rejected = 2
     }
 }

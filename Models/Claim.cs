@@ -6,33 +6,29 @@ namespace CMCS.Models
 {
     public class Claim
     {
-        [Key]
-        public int ClaimID { get; set; }
+        public int Id { get; set; }
+
         [Required]
-        [Display(Name = "Lecturer ID")]
-        public int LecturerID { get; set; }
+        public string LecturerId { get; set; } // or use int if you have users table
+
         [Required]
-        [Display(Name = "Date Submitted")]
-        [DataType(DataType.Date)]
-        public DateTime DateSubmitted { get; set; }
+        [Range(0.1, 1000)]
+        public decimal HoursWorked { get; set; }
+
         [Required]
-        [Display(Name = "Total Hours")]
-        [Range(0.1, 200, ErrorMessage = "Hours must be between 0.1 and 200")]
-        public double TotalHours { get; set; }
-        [Required]
-        [Display(Name = "Hourly Rate")]
-        [Range(1, 1000, ErrorMessage = "Hourly rate must be between R1 and R1000")]
-        [DataType(DataType.Currency)]
+        [Range(0.1, 10000)]
         public decimal HourlyRate { get; set; }
-        [Display(Name = "Additional Notes")]
-        [StringLength(500, ErrorMessage = "Notes cannot exceed 500 characters")]
-        public string? Notes { get; set; }
-        [Required]
-        [Display(Name = "Status")]
-        public ClaimStatus Status { get; set; } = ClaimStatus.Submitted;
-        [Display(Name = "Total Amount")]
-        public decimal TotalAmount => (decimal)TotalHours * HourlyRate;
-        public Lecturer? Lecturer { get; set; }
-        public List<Document>? Documents { get; set; } = new List<Document>();
+
+        public decimal Total => HoursWorked * HourlyRate;
+
+        public string Notes { get; set; }
+
+        public string UploadedFileName { get; set; } // stored filename
+        public string OriginalFileName { get; set; } // for display
+
+        public ClaimStatus Status { get; set; } = ClaimStatus.Pending;
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; }
     }
 }

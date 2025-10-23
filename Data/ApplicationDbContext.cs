@@ -2,8 +2,11 @@
 using System.Reflection.Emit;
 using CMCS.Models; // Assuming your models are in this namespace
 using Microsoft.EntityFrameworkCore;
+using ClaimApp.Models;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace CMCS.Data
+namespace ClaimApp.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -55,5 +58,14 @@ namespace CMCS.Data
             );
         }
 
+    }
+
+    public interface IClaimService
+    {
+        Task<Claim> CreateAsync(Claim claim, IFormFile file);
+        Task<Claim> GetAsync(int id);
+        Task ApproveAsync(int id, string approverId);
+        Task RejectAsync(int id, string approverId, string reason = null);
+        Task<IEnumerable<Claim>> GetPendingAsync();
     }
 }

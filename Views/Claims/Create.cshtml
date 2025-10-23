@@ -1,78 +1,39 @@
-﻿@model CMCS.Models.Claim
+﻿@model IEnumerable<ClaimApp.Models.Claim>
 
 @{
-    ViewData["Title"] = "Create New Claim";
+    ViewData["Title"] = "Pending Claims";
 }
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-lg rounded-lg border-0">
-                <div class="card-header bg-primary text-white text-center rounded-top-lg py-3">
-                    <h1 class="h4 mb-0">Create New Claim</h1>
-                </div>
-                <div class="card-body p-4">
-                    <form asp-action="Create" enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label asp-for="ClaimID" class="form-label">Claim ID</label>
-                                    <input asp-for="ClaimID" class="form-control rounded-lg" />
-                                    <span asp-validation-for="ClaimID" class="text-danger"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label asp-for="LecturerID" class="form-label">Lecturer ID</label>
-                                    <input asp-for="LecturerID" class="form-control rounded-lg" />
-                                    <span asp-validation-for="LecturerID" class="text-danger"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label asp-for="DateSubmitted" class="form-label">Date Submitted</label>
-                                    <input asp-for="DateSubmitted" type="date" class="form-control rounded-lg" />
-                                    <span asp-validation-for="DateSubmitted" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label asp-for="TotalHours" class="form-label">Total Hours</label>
-                                    <input asp-for="TotalHours" class="form-control rounded-lg" />
-                                    <span asp-validation-for="TotalHours" class="text-danger"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label asp-for="Status" class="form-label">Status</label>
-                                    <select asp-for="Status" class="form-select rounded-lg">
-                                        <option value="">-- Select Status --</option>
-                                        <option value="Submitted">Submitted</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="Approved">Approved</option>
-                                        <option value="Rejected">Rejected</option>
-                                    </select>
-                                    <span asp-validation-for="Status" class="text-danger"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="supportingDocument" class="form-label">Supporting Document</label>
-                                    <input type="file" id="supportingDocument" name="supportingDocument" class="form-control rounded-lg" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-primary rounded-lg shadow-sm">
-                                <i class="fas fa-plus-circle me-2"></i>Create Claim
-                            </button>
-                            <a asp-action="Index" class="btn btn-outline-secondary rounded-lg">
-                                <i class="fas fa-arrow-left me-2"></i>Back to List
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+<h2>Pending Claims</h2>
+@if(TempData["Error"] != null){ <div class="alert alert-danger">@TempData["Error"]</div> }
+<table class="table">
+    <thead>
+        <tr><th>Lecturer</th><th>Hours</th><th>Rate</th><th>Total</th><th>File</th><th>Submitted</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+    @foreach(var c in Model)
+    {
+        <tr>
+            <td>@c.LecturerId</td>
+            <td>@c.HoursWorked</td>
+            <td>@c.HourlyRate</td>
+            <td>@c.Total</td>
+            <td>
+                @if(!string.IsNullOrEmpty(c.OriginalFileName)){
+                    <a href="~/uploads/@c.UploadedFileName" target="_blank">@c.OriginalFileName</a>
+                } else { <span>-</span> }
+            </td>
+            <td>@c.CreatedAt.ToLocalTime()</td>
+            <td>
+                <form asp-action="Approve" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@c.Id" />
+                    <button class="btn btn-success btn-sm">Approve</button>
+                </form>
+                <form asp-action="Reject" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="@c.Id" />
+                    <button class="btn btn-danger btn-sm">Reject</button>
+                </form>
+            </td>
+        </tr>
     }
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-}
+    </tbody>
+</table>
