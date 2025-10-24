@@ -1,0 +1,186 @@
+@model dynamic
+
+@{
+    ViewData["Title"] = "Lecturer Dashboard";
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-6 fw-bold">
+            <i class="fas fa-tachometer-alt me-2"></i>
+            Lecturer Dashboard
+        </h1>
+        <a asp-controller="Claim" asp-action="Submit" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-1"></i>Submit New Claim
+        </a>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">@Model.TotalClaims</h4>
+                            <p class="card-text">Total Claims</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-file-invoice-dollar fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">@Model.PendingClaims</h4>
+                            <p class="card-text">Pending Claims</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-clock fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">@Model.ApprovedClaims</h4>
+                            <p class="card-text">Approved Claims</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-check-circle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 class="card-title">@Model.RejectedClaims</h4>
+                            <p class="card-text">Rejected Claims</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-times-circle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Quick Actions -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-bolt me-2"></i>Quick Actions
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Claim" asp-action="Submit" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i>Submit New Claim
+                        </a>
+                        <a asp-controller="Lecturer" asp-action="MyClaims" class="btn btn-outline-primary">
+                            <i class="fas fa-list me-1"></i>View My Claims
+                        </a>
+                        <a href="#" class="btn btn-outline-secondary">
+                            <i class="fas fa-download me-1"></i>Download Reports
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Claims -->
+        <div class="col-md-8 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-history me-2"></i>Recent Claims
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.RecentClaims != null && Model.RecentClaims.Count > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Claim ID</th>
+                                        <th>Date</th>
+                                        <th>Hours</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var claim in Model.RecentClaims)
+                                    {
+                                        <tr>
+                                            <td>#@claim.ClaimID</td>
+                                            <td>@claim.DateSubmitted.ToString("dd MMM yyyy")</td>
+                                            <td>@claim.TotalHours</td>
+                                            <td>R@claim.TotalAmount.ToString("F2")</td>
+                                            <td>
+                                                <span class="badge @GetStatusBadgeClass(claim.Status)">@claim.Status</span>
+                                            </td>
+                                            <td>
+                                                <a asp-controller="Claim" asp-action="Details" asp-route-id="@claim.ClaimID" 
+                                                   class="btn btn-outline-primary btn-sm">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="fas fa-file-invoice-dollar fa-3x text-muted mb-3"></i>
+                            <h6 class="text-muted">No claims submitted yet</h6>
+                            <p class="text-muted">Start by submitting your first claim!</p>
+                            <a asp-controller="Claim" asp-action="Submit" class="btn btn-primary">
+                                <i class="fas fa-plus me-1"></i>Submit Claim
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Pending" => "bg-warning",
+            "Approved" => "bg-success",
+            "Rejected" => "bg-danger",
+            "Under Review" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+}
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}
