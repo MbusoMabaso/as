@@ -1,4 +1,6 @@
-﻿namespace CMCS.Tests;
+﻿using Xunit;
+
+namespace CMCS.Tests;
 
 public class UnitTest1
 {

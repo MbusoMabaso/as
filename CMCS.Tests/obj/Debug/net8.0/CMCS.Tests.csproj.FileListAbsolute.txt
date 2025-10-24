@@ -1,0 +1,7 @@
+/workspaces/as/CMCS.Tests/bin/Debug/net8.0/CoverletSourceRootsMapping_CMCS.Tests
+/workspaces/as/CMCS.Tests/obj/Debug/net8.0/CMCS.Tests.csproj.AssemblyReference.cache
+/workspaces/as/CMCS.Tests/obj/Debug/net8.0/CMCS.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/as/CMCS.Tests/obj/Debug/net8.0/CMCS.Tests.AssemblyInfoInputs.cache
+/workspaces/as/CMCS.Tests/obj/Debug/net8.0/CMCS.Tests.AssemblyInfo.cs
+/workspaces/as/CMCS.Tests/obj/Debug/net8.0/CMCS.Tests.csproj.CoreCompileInputs.cache
+/workspaces/as/CMCS.Tests/obj/Debug/net8.0/CMCS.Tests.sourcelink.json
