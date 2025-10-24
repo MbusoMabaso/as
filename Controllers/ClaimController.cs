@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CMCS.Controllers
 {
-    public class ClaimController : Controller
+    public class ClaimController : BaseController
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _environment;
@@ -22,6 +22,9 @@ namespace CMCS.Controllers
         // GET: Claim
         public async Task<IActionResult> Index()
         {
+            var authCheck = RedirectToLoginIfNotAuthenticated();
+            if (authCheck != null) return authCheck;
+
             var claims = await _context.Claims
                 .Include(c => c.Lecturer)
                 .Include(c => c.Documents)
@@ -31,13 +34,46 @@ namespace CMCS.Controllers
             return View(claims);
         }
 
+        // GET: Claim/MyClaims - View only current user's claims
+        public async Task<IActionResult> MyClaims()
+        {
+            var authCheck = RedirectToLoginIfNotAuthenticated();
+            if (authCheck != null) return authCheck;
+
+            var lecturerId = GetCurrentUserId();
+            if (lecturerId == 0)
+            {
+                TempData["ErrorMessage"] = "Unable to identify current user.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            var claims = await _context.Claims
+                .Include(c => c.Lecturer)
+                .Include(c => c.Documents)
+                .Where(c => c.LecturerID == lecturerId)
+                .OrderByDescending(c => c.DateSubmitted)
+                .ToListAsync();
+            
+            return View(claims);
+        }
+
         // GET: Claim/Submit
         public IActionResult Submit()
         {
+            var authCheck = RedirectToLoginIfNotAuthenticated();
+            if (authCheck != null) return authCheck;
+
+            var lecturerId = GetCurrentUserId();
+            if (lecturerId == 0)
+            {
+                TempData["ErrorMessage"] = "Unable to identify current user.";
+                return RedirectToAction("Login", "Account");
+            }
+
             var claim = new Claim
             {
                 DateSubmitted = DateTime.Now,
-                LecturerID = 1 // This should come from the logged-in user
+                LecturerID = lecturerId
             };
             return View(claim);
         }
@@ -47,6 +83,16 @@ namespace CMCS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Submit(Claim claim, IFormFileCollection? files)
         {
+            var authCheck = RedirectToLoginIfNotAuthenticated();
+            if (authCheck != null) return authCheck;
+
+            var lecturerId = GetCurrentUserId();
+            if (lecturerId == 0)
+            {
+                TempData["ErrorMessage"] = "Unable to identify current user.";
+                return RedirectToAction("Login", "Account");
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -54,6 +100,7 @@ namespace CMCS.Controllers
                     // Set default values
                     claim.DateSubmitted = DateTime.Now;
                     claim.Status = ClaimStatus.Submitted;
+                    claim.LecturerID = lecturerId; // Ensure the claim belongs to the current user
 
                     _context.Claims.Add(claim);
                     await _context.SaveChangesAsync();
@@ -85,6 +132,9 @@ namespace CMCS.Controllers
         // GET: Claim/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var authCheck = RedirectToLoginIfNotAuthenticated();
+            if (authCheck != null) return authCheck;
+
             if (id == null)
             {
                 return NotFound();
@@ -98,6 +148,16 @@ namespace CMCS.Controllers
             if (claim == null)
             {
                 return NotFound();
+            }
+
+            // Check if user can view this claim (either owner or admin role)
+            var currentUserId = GetCurrentUserId();
+            var userRole = GetCurrentUserRole();
+            
+            if (claim.LecturerID != currentUserId && userRole != "AcademicManager" && userRole != "ProgrammeCoordinator")
+            {
+                TempData["ErrorMessage"] = "You do not have permission to view this claim.";
+                return RedirectToAction("MyClaims");
             }
 
             return View(claim);
@@ -194,7 +254,16 @@ namespace CMCS.Controllers
 
         private async Task HandleFileUploads(int claimId, IFormFileCollection files)
         {
-            var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "claims", claimId.ToString());
+            // Secure file upload path - prevent directory traversal
+            var safeClaimId = claimId.ToString().Replace("..", "").Replace("/", "").Replace("\\", "");
+            var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "claims", safeClaimId);
+            
+            // Ensure the uploads directory exists and is within the web root
+            var uploadsBasePath = Path.Combine(_environment.WebRootPath, "uploads");
+            if (!Directory.Exists(uploadsBasePath))
+            {
+                Directory.CreateDirectory(uploadsBasePath);
+            }
             
             if (!Directory.Exists(uploadsFolder))
             {

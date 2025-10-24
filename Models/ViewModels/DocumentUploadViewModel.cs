@@ -7,6 +7,6 @@ namespace CMCS.Models.ViewModels
     {
         [Required]
         [Display(Name = "File")]
-        public IFormFile File { get; set; }
+        public IFormFile File { get; set; } = null!;
     }
 }

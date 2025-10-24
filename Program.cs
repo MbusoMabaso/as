@@ -14,10 +14,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IClaimService, ClaimService>();
 builder.Services.AddControllersWithViews();
 
+// Add session services
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
 app.MapDefaultControllerRoute();
 
 app.Run();

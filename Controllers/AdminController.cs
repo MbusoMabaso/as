@@ -31,7 +31,7 @@ namespace ClaimApp.Controllers
         {
             try
             {
-                await _svc.ApproveAsync(id, User?.Identity?.Name);
+                await _svc.ApproveAsync(id, User?.Identity?.Name ?? "Unknown");
                 return RedirectToAction(nameof(Pending));
             }
             catch (System.Exception ex)
@@ -48,7 +48,7 @@ namespace ClaimApp.Controllers
         {
             try
             {
-                await _svc.RejectAsync(id, User?.Identity?.Name, reason);
+                await _svc.RejectAsync(id, User?.Identity?.Name ?? "Unknown", reason);
                 return RedirectToAction(nameof(Pending));
             }
             catch (System.Exception ex)

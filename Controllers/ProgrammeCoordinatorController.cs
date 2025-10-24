@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CMCS.Controllers
 {
-    public class ProgrammeCoordinatorController : Controller
+    public class ProgrammeCoordinatorController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
@@ -19,18 +19,27 @@ namespace CMCS.Controllers
         // This action will handle the request for the dashboard view.
         public IActionResult Dashboard()
         {
+            var authCheck = RedirectToLoginIfNotAuthorized("ProgrammeCoordinator");
+            if (authCheck != null) return authCheck;
+            
             return View();
         }
 
         // Action to handle claims verification and approval
         public IActionResult Approve()
         {
+            var authCheck = RedirectToLoginIfNotAuthorized("ProgrammeCoordinator");
+            if (authCheck != null) return authCheck;
+            
             var claims = _context.Claims.Include(c => c.Lecturer).Where(c => c.Status == ClaimStatus.Submitted).ToList();
             return View(claims);
         }
 
         public async Task<IActionResult> ApproveClaim(int id)
         {
+            var authCheck = RedirectToLoginIfNotAuthorized("ProgrammeCoordinator");
+            if (authCheck != null) return authCheck;
+            
             var claim = await _context.Claims.FindAsync(id);
             if (claim == null)
             {
@@ -46,6 +55,9 @@ namespace CMCS.Controllers
 
         public async Task<IActionResult> RejectClaim(int id)
         {
+            var authCheck = RedirectToLoginIfNotAuthorized("ProgrammeCoordinator");
+            if (authCheck != null) return authCheck;
+            
             var claim = await _context.Claims.FindAsync(id);
             if (claim == null)
             {
@@ -61,11 +73,17 @@ namespace CMCS.Controllers
 
         public IActionResult Index()
         {
+            var authCheck = RedirectToLoginIfNotAuthorized("ProgrammeCoordinator");
+            if (authCheck != null) return authCheck;
+            
             return View();
         }
 
         public IActionResult Create()
         {
+            var authCheck = RedirectToLoginIfNotAuthorized("ProgrammeCoordinator");
+            if (authCheck != null) return authCheck;
+            
             return View();
         }
 

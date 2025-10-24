@@ -77,7 +77,7 @@ namespace ClaimApp.Services
             return claim;
         }
 
-        public async Task<CMCS.Models.Claim> GetAsync(int id)
+        public async Task<CMCS.Models.Claim?> GetAsync(int id)
         {
             return await _db.Claims.Include(c => c.Documents).Include(c => c.Lecturer).FirstOrDefaultAsync(c => c.ClaimID == id);
         }
@@ -95,7 +95,7 @@ namespace ClaimApp.Services
             await _db.SaveChangesAsync();
         }
 
-        public async Task RejectAsync(int id, string approverId, string reason = null)
+        public async Task RejectAsync(int id, string approverId, string? reason = null)
         {
             var claim = await _db.Claims.FindAsync(id) ?? throw new KeyNotFoundException("Claim not found.");
             claim.Status = CMCS.Models.ClaimStatus.Rejected;

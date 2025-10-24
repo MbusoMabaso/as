@@ -8,6 +8,6 @@
         public int RejectedClaims { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal ApprovedAmount { get; set; }
-        public List<Claim> RecentClaims { get; set; }
+        public List<Claim> RecentClaims { get; set; } = new();
     }
 }
