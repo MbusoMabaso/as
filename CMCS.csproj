@@ -20,4 +20,12 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
   </ItemGroup>
 
+  <!-- Exclude test project files from being automatically included in the web project
+       (CMCS.Tests is a subfolder of the repository root). Without this, SDK-style
+       projects include all *.cs files under the project directory recursively and
+       would accidentally compile the test sources into the web app. -->
+  <PropertyGroup>
+    <DefaultItemExcludes>CMCS.Tests\**\*;$(DefaultItemExcludes)</DefaultItemExcludes>
+  </PropertyGroup>
+
 </Project>
