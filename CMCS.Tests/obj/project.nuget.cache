@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/qPml1X7Eew=",
+  "dgSpecHash": "+15StlFYKns=",
   "success": true,
   "projectFilePath": "/workspaces/as/CMCS.Tests/CMCS.Tests.csproj",
   "expectedPackageFiles": [
@@ -83,6 +83,7 @@
     "/home/codespace/.nuget/packages/microsoft.entityframeworkcore/8.0.0/microsoft.entityframeworkcore.8.0.0.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.0/microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.0/microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512",
+    "/home/codespace/.nuget/packages/microsoft.entityframeworkcore.inmemory/8.0.0/microsoft.entityframeworkcore.inmemory.8.0.0.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.0/microsoft.entityframeworkcore.relational.8.0.0.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.entityframeworkcore.sqlserver/8.0.0/microsoft.entityframeworkcore.sqlserver.8.0.0.nupkg.sha512",
     "/home/codespace/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
