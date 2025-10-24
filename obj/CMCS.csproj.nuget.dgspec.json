@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lex\\Desktop\\set\\as\\CMCS.csproj": {}
+    "c:\\Users\\Lex\\Desktop\\set\\as\\CMCS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lex\\Desktop\\set\\as\\CMCS.csproj": {
+    "c:\\Users\\Lex\\Desktop\\set\\as\\CMCS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lex\\Desktop\\set\\as\\CMCS.csproj",
+        "projectUniqueName": "c:\\Users\\Lex\\Desktop\\set\\as\\CMCS.csproj",
         "projectName": "CMCS",
-        "projectPath": "C:\\Users\\Lex\\Desktop\\set\\as\\CMCS.csproj",
+        "projectPath": "c:\\Users\\Lex\\Desktop\\set\\as\\CMCS.csproj",
         "packagesPath": "C:\\Users\\Lex\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lex\\Desktop\\set\\as\\obj\\",
+        "outputPath": "c:\\Users\\Lex\\Desktop\\set\\as\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
