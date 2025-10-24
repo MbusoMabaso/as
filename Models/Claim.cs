@@ -1,34 +1,44 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CMCS.Models
 {
     public class Claim
     {
-        public int Id { get; set; }
+        [Key]
+        public int ClaimID { get; set; }
 
         [Required]
-        public string LecturerId { get; set; } // or use int if you have users table
+        public int LecturerID { get; set; }
 
-        [Required]
-        [Range(0.1, 1000)]
-        public decimal HoursWorked { get; set; }
+        [Display(Name = "Total Hours")]
+        public double TotalHours { get; set; }
 
-        [Required]
-        [Range(0.1, 10000)]
+        [Display(Name = "Hourly Rate")]
+        [DataType(DataType.Currency)]
         public decimal HourlyRate { get; set; }
 
-        public decimal Total => HoursWorked * HourlyRate;
+        [Display(Name = "Total Amount")]
+        [DataType(DataType.Currency)]
+        public decimal TotalAmount => (decimal)TotalHours * HourlyRate;
 
-        public string Notes { get; set; }
+        [StringLength(500)]
+        public string? Notes { get; set; }
 
-        public string UploadedFileName { get; set; } // stored filename
-        public string OriginalFileName { get; set; } // for display
+        // Status is stored as a string to match existing migrations/views
+        [Required]
+        public string Status { get; set; } = ClaimStatus.Submitted;
 
-        public ClaimStatus Status { get; set; } = ClaimStatus.Pending;
+        // Optional rejection reason for auditing/feedback
+        [StringLength(500)]
+        public string? RejectionReason { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
+        [Display(Name = "Date Submitted")]
+        public DateTime DateSubmitted { get; set; } = DateTime.Now;
+
+        // Navigation properties
+        public Lecturer? Lecturer { get; set; }
+        public ICollection<Document>? Documents { get; set; }
     }
 }

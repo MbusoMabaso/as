@@ -1,0 +1,9 @@
+/workspaces/as/obj/Debug/net8.0/CMCS.csproj.AssemblyReference.cache
+/workspaces/as/obj/Debug/net8.0/CMCS.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/as/obj/Debug/net8.0/CMCS.AssemblyInfoInputs.cache
+/workspaces/as/obj/Debug/net8.0/CMCS.AssemblyInfo.cs
+/workspaces/as/obj/Debug/net8.0/CMCS.csproj.CoreCompileInputs.cache
+/workspaces/as/obj/Debug/net8.0/CMCS.MvcApplicationPartsAssemblyInfo.cache
+/workspaces/as/obj/Debug/net8.0/CMCS.RazorAssemblyInfo.cache
+/workspaces/as/obj/Debug/net8.0/CMCS.RazorAssemblyInfo.cs
+/workspaces/as/obj/Debug/net8.0/CMCS.sourcelink.json

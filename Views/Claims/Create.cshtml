@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClaimApp.Models.Claim>
+﻿@model IEnumerable<CMCS.Models.Claim>
 
 @{
     ViewData["Title"] = "Pending Claims";
@@ -13,23 +13,23 @@
     @foreach(var c in Model)
     {
         <tr>
-            <td>@c.LecturerId</td>
-            <td>@c.HoursWorked</td>
-            <td>@c.HourlyRate</td>
-            <td>@c.Total</td>
+            <td>@(c.Lecturer?.Name ?? c.LecturerID.ToString())</td>
+            <td>@c.TotalHours</td>
+            <td>R@c.HourlyRate.ToString("F2")</td>
+            <td>R@c.TotalAmount.ToString("F2")</td>
             <td>
-                @if(!string.IsNullOrEmpty(c.OriginalFileName)){
-                    <a href="~/uploads/@c.UploadedFileName" target="_blank">@c.OriginalFileName</a>
+                @if (c.Documents != null && c.Documents.Any()) {
+                    <a href="~/uploads/claims/@c.ClaimID/@System.IO.Path.GetFileName(c.Documents.First().FilePath)" target="_blank">@c.Documents.First().FileName</a>
                 } else { <span>-</span> }
             </td>
-            <td>@c.CreatedAt.ToLocalTime()</td>
+            <td>@c.DateSubmitted.ToLocalTime()</td>
             <td>
                 <form asp-action="Approve" method="post" style="display:inline">
-                    <input type="hidden" name="id" value="@c.Id" />
+                    <input type="hidden" name="id" value="@c.ClaimID" />
                     <button class="btn btn-success btn-sm">Approve</button>
                 </form>
                 <form asp-action="Reject" method="post" style="display:inline">
-                    <input type="hidden" name="id" value="@c.Id" />
+                    <input type="hidden" name="id" value="@c.ClaimID" />
                     <button class="btn btn-danger btn-sm">Reject</button>
                 </form>
             </td>
